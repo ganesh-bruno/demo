@@ -1,0 +1,59 @@
+meta {
+  name: 01 - Performance Endpoint Try - memSQL
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{URL}}/performance
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  X-API-Email: {{X-API-Email}}
+  X-API-Key: {{X-API-Key}}
+  BTT-Key: {{BTT-Key}}
+}
+
+body:json {
+  {
+    "site":"dsg2",
+    "start":1725285600,
+    "end":1725892440,
+    "dataType":"rum",
+    "origin":[],
+    "dataColumns":["onload","dns","tcp","basePage","dom","firstByte","ssl","redirect","ttDomInt","ttDomCont","pageHits","timeToInteractive","largestContentfulPaint","totalBlockingTime","firstInputDelayDuration","cumulativeLayoutShift","firstContentfulPaint","visitors"],
+    "group":[],
+    "order":[],
+    "sort":[],
+    "limit":50000,
+    "pageName":["Product"],
+    "pageGroup":["All Groups"],
+    "device":["Desktop"],
+    "percentile":"75",
+    "performanceMetric":"onload",
+    "salesType":"sales",
+    "avgType":"percentile",
+    "calendarType":"calendar",
+    "tzOffset":"-4",
+    "botTraffic":"excludeBots",
+    "useGeniusCache":false,
+    "debug":true
+  } 
+}
+
+script:post-response {
+  ////Output Response body contents
+  let thisVar = res.body.data;
+  console.log(thisVar);
+  
+  // Variables and JSON Keys are case sensitiv!
+  bru.setVar("responseA", thisVar);
+  
+  //Output Response body contents
+  console.log(bru.getVar("responseA"));
+  
+  
+}
